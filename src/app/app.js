@@ -2,21 +2,13 @@ import DashboardAddons from 'hub-dashboard-addons';
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {render} from 'react-dom';
-import Select from '@jetbrains/ring-ui/components/select/select';
-import Panel from '@jetbrains/ring-ui/components/panel/panel';
-import Button from '@jetbrains/ring-ui/components/button/button';
 import EmptyWidget, {EmptyWidgetFaces} from '@jetbrains/hub-widget-ui/dist/empty-widget';
 import {observable} from 'mobx';
 
 import 'file-loader?name=[name].[ext]!../../manifest.json'; // eslint-disable-line import/no-unresolved
 import styles from './app.css';
 import sayHello from './say-hello';
-
-const COLOR_OPTIONS = [
-  {key: 'black', label: 'Black'},
-  {key: 'red', label: 'Red'},
-  {key: 'blue', label: 'Blue'}
-];
+import Configuration from './configuration';
 
 class Widget extends Component {
   static propTypes = {
@@ -65,30 +57,16 @@ class Widget extends Component {
 
   changeColor = selectedColor => this.setState({selectedColor});
 
-  renderConfiguration() {
-    const {selectedColor} = this.state;
-
-    return (
-      <div className={styles.widget}>
-        <Select
-          data={COLOR_OPTIONS}
-          selected={selectedColor}
-          onChange={this.changeColor}
-          label="Select text color"
-        />
-        <Panel>
-          <Button primary onClick={this.saveConfig}>{'Save'}</Button>
-          <Button onClick={this.cancelConfig}>{'Cancel'}</Button>
-        </Panel>
-      </div>
-    );
-  }
-
   render() {
     const {selectedColor, isConfiguring} = this.state;
 
     if (isConfiguring) {
-      return this.renderConfiguration();
+      return (
+        <Configuration
+          onSave={this.saveConfig}
+          onCancel={this.cancelConfig}
+        />
+      );
     }
 
     return (
