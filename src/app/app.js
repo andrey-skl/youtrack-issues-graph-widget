@@ -6,6 +6,7 @@ import Select from '@jetbrains/ring-ui/components/select/select';
 import Panel from '@jetbrains/ring-ui/components/panel/panel';
 import Button from '@jetbrains/ring-ui/components/button/button';
 import EmptyWidget, {EmptyWidgetFaces} from '@jetbrains/hub-widget-ui/dist/empty-widget';
+import {observable} from 'mobx';
 
 import 'file-loader?name=[name].[ext]!../../manifest.json'; // eslint-disable-line import/no-unresolved
 import styles from './app.css';
@@ -38,6 +39,8 @@ class Widget extends Component {
 
     this.initialize(dashboardApi);
   }
+
+  @observable title = ''; // MobX example
 
   initialize(dashboardApi) {
     dashboardApi.readConfig().then(config => {

@@ -3,9 +3,12 @@
   "name": "Issues Graph",
   "version": "1.0.0",
   "description": "Visualization of issue dependencies",
-  "author": "Andrey Skladchikov &lt;andrey.skladchikov@jetbrains.com&gt;",
+  "author": "JetBrains YouTrack Team",
   "products": {
-    "Hub": "2018.2",
-    "YouTrack": "2018.2"
+    "Hub": "2018.4",
+    "YouTrack": "2018.4"
+  },
+  "dependencies": {
+    "YouTrack": ">=2018.4"
   }
 }
