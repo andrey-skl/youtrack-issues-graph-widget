@@ -65,6 +65,7 @@ class Widget extends Component {
         <Configuration
           onSave={this.saveConfig}
           onCancel={this.cancelConfig}
+          dashboardApi={this.props.dashboardApi}
         />
       );
     }

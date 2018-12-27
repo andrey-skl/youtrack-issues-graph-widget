@@ -7,26 +7,41 @@ import Button from '@jetbrains/ring-ui/components/button/button';
 
 import styles from './app.css';
 
-const COLOR_OPTIONS = [
-  {key: 'black', label: 'Black'},
-  {key: 'red', label: 'Red'},
-  {key: 'blue', label: 'Blue'}
-];
-
 class Configuration {
   @observable selectedServer = null;
+  @observable servers = null;
+
+  async loadServers(dashboardApi) {
+    this.servers = (await dashboardApi.loadServices('YouTrack')).
+      filter(s => !!s.homeUrl);
+    return this.servers;
+  }
+
+  selectServer = item => {
+    this.selectServer = item.server;
+  }
 }
 
-export default @observer class ConfigurationView extends Component {
-  config = new Configuration();
+@observer
+class ConfigurationView extends Component {
+  async componentDidMount() {
+    const servers = await this.store.loadServers(this.props.dashboardApi);
+    this.store.selectServer = servers[0];
+  }
+
+  @observable store = new Configuration();
 
   render() {
+    const {store} = this;
+
     return (
       <div className={styles.widget}>
         <Select
-          data={COLOR_OPTIONS}
-          onChange={this.changeColor}
-          label="Select text color"
+          data={store.servers?.map(server => ({server, key: server.id, label: server.name, description: server.homeUrl}))}
+          loading={!store.servers}
+          onSelect={store.selectServer}
+          size={Select.Size.FULL}
+          label="Select YouTrack server"
         />
         <Panel>
           <Button primary onClick={this.saveConfig}>{'Save'}</Button>
@@ -36,3 +51,5 @@ export default @observer class ConfigurationView extends Component {
     );
   }
 }
+
+export default ConfigurationView;
