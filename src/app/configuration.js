@@ -22,18 +22,16 @@ class Configuration {
   }
 }
 
+const store = new Configuration();
+
 @observer
 class ConfigurationView extends Component {
   async componentDidMount() {
-    const servers = await this.store.loadServers(this.props.dashboardApi);
-    this.store.selectServer = servers[0];
+    const servers = await store.loadServers(this.props.dashboardApi);
+    store.selectServer = servers[0];
   }
 
-  @observable store = new Configuration();
-
   render() {
-    const {store} = this;
-
     return (
       <div className={styles.widget}>
         <Select
