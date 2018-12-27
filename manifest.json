@@ -1,0 +1,11 @@
+{
+  "key": "issues-graph",
+  "name": "Issues Graph",
+  "version": "1.0.0",
+  "description": "Visualization of issue dependencies",
+  "author": "Andrey Skladchikov &lt;andrey.skladchikov@jetbrains.com&gt;",
+  "products": {
+    "Hub": "2018.2",
+    "YouTrack": "2018.2"
+  }
+}
